@@ -63,7 +63,7 @@ center_x = st.sidebar.number_input("Center X", value=-0.5, format="%.5f")
 center_y = st.sidebar.number_input("Center Y", value=0.0, format="%.5f")
 zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=1.0, step=0.1, format="%.2f")
 max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=200)
-color_map = st.sidebar.selectbox("Color Map", ["viridis", "plasma", "inferno", "magma", "cividis", "jet"])
+color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"])
 
 cols = st.columns(6, gap="small")
 cols[0].image("static/p1.png")
@@ -73,13 +73,18 @@ cols[3].image("static/p4.png")
 cols[4].image("static/p5.png")
 cols[5].image("static/p6.png")
 
-cols = st.columns(6)
-cols[0].button("Preset 1")
-cols[1].button("Preset 2")
-cols[2].button("Preset 3")
-cols[3].button("Preset 4")
-cols[4].button("Preset 5")
-cols[5].button("Preset 6")
+bcols = st.columns(6)
+if bcols[0].button("Preset 1"):
+    center_x.value=-0.5
+    center_y.value=-0.605
+    zoom.value=150
+    color_map.value="viridis"
+    
+bcols[1].button("Preset 2")
+bcols[2].button("Preset 3")
+bcols[3].button("Preset 4")
+bcols[4].button("Preset 5")
+bcols[5].button("Preset 6")
 
 # Button to generate Mandelbrot set
 if st.sidebar.button("Generate Mandelbrot Set"):
