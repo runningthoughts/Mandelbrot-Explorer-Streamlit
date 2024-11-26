@@ -13,12 +13,21 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')  # Use non-GUI backend for matplotlibz
 
-# Allows Ctrl-C to work in PC environment
-# def signal_handler(signal, frame):
-#     print('You pressed Ctrl+C!')
-#     sys.exit(0)
-
-# signal.signal(signal.SIGINT, signal_handler)
+#################################################################
+# Here are all the Presets from the older JavaScript code.
+# Streamlit is stateless, so have to preserve the Preload value
+# in a purposeful state and then simply load those values each
+# time the page loads.
+#################################################################
+PRESETS = [
+    [-0.5, 0.0, 1.0, 200, 0],
+    [-0.5, -0.605, 150, 200, 0],
+    [-1.15, -0.275, 30, 200, 1],
+    [-0.8, 0.181, 200, 200, 2],
+    [0.27, -0.005, 1000, 200, 3],
+    [-0.483, -0.625, 1000, 200, 4],
+    [-1.04, 0.349, 800, 200, 5]
+]
 
 #################################################################
 # Calculate the Mandelbrot set
@@ -48,9 +57,13 @@ def mandelbrot_set(xmin, xmax, ymin, ymax, img_width, img_height, max_iter):
 #################################################################
 # Streamlit Page Settings
 #################################################################
-st.set_page_config(page_title="Mandelbrot Explorer", layout="wide")
+st.set_page_config(page_title="Mandelbrot Explorer", layout="centered")
 st.title("Mandelbrot Set Explorer")
 st.write("Explore the Mandelbrot Set by adjusting the parameters below.")
+
+# Initialize session state for preset index if not already set
+if 'preset_idx' not in st.session_state:
+    st.session_state.preset_idx = 0
 
 #################################################################
 # Extract the Form data, then generates the Mandelbrot using the
@@ -59,32 +72,46 @@ st.write("Explore the Mandelbrot Set by adjusting the parameters below.")
 #################################################################
 
 # User inputs for generating the Mandelbrot set
-center_x = st.sidebar.number_input("Center X", value=-0.5, format="%.5f")
-center_y = st.sidebar.number_input("Center Y", value=0.0, format="%.5f")
-zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=1.0, step=0.1, format="%.2f")
-max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=200)
-color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"])
+preset_buttons = [st.sidebar.button(f"Preset {i+1}") for i in range(6)]
+for i, button in enumerate(preset_buttons):
+    if button:
+        st.session_state.preset_idx = i + 1
+
+selected_preset = PRESETS[st.session_state.preset_idx]
+
+center_x = st.sidebar.number_input("Center X", value=selected_preset[0], format="%.5f")
+center_y = st.sidebar.number_input("Center Y", value=selected_preset[1], format="%.5f")
+zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=selected_preset[2], step=0.1, format="%.2f")
+max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=selected_preset[3])
+color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"], index=["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"].index(selected_preset[4])))
+
+# # User inputs for generating the Mandelbrot set
+# center_x = st.sidebar.number_input("Center X", value=-0.5, format="%.5f")
+# center_y = st.sidebar.number_input("Center Y", value=0.0, format="%.5f")
+# zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=1.0, step=0.1, format="%.2f")
+# max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=200)
+# color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"])
 
 cols = st.columns(6, gap="small")
-cols[0].image("static/p1.png")
-cols[1].image("static/p2.png")
-cols[2].image("static/p3.png")
-cols[3].image("static/p4.png")
-cols[4].image("static/p5.png")
-cols[5].image("static/p6.png")
+cols[0].image("static/p1.png", caption="Preset 1")
+cols[1].image("static/p2.png", caption="Preset 2")
+cols[2].image("static/p3.png", caption="Preset 3")
+cols[3].image("static/p4.png", caption="Preset 4")
+cols[4].image("static/p5.png", caption="Preset 5")
+cols[5].image("static/p6.png", caption="Preset 6")
 
-bcols = st.columns(6)
-if bcols[0].button("Preset 1"):
-    center_x.value=-0.5
-    center_y.value=-0.605
-    zoom.value=150
-    color_map.value="viridis"
-    
-bcols[1].button("Preset 2")
-bcols[2].button("Preset 3")
-bcols[3].button("Preset 4")
-bcols[4].button("Preset 5")
-bcols[5].button("Preset 6")
+# bcols = st.columns(6)
+# if bcols[0].button("Preset 1"):
+#     center_x.value=-0.5
+#     center_y.value=-0.605
+#     zoom.value=150
+#     color_map.value="viridis"
+
+# bcols[1].button("Preset 2")
+# bcols[2].button("Preset 3")
+# bcols[3].button("Preset 4")
+# bcols[4].button("Preset 5")
+# bcols[5].button("Preset 6")
 
 # Button to generate Mandelbrot set
 if st.sidebar.button("Generate Mandelbrot Set"):
