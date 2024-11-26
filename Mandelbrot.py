@@ -83,7 +83,7 @@ center_x = st.sidebar.number_input("Center X", value=selected_preset[0], format=
 center_y = st.sidebar.number_input("Center Y", value=selected_preset[1], format="%.5f")
 zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=selected_preset[2], step=0.1, format="%.2f")
 max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=selected_preset[3])
-color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"], index=["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"].index(selected_preset[4]))
+color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"], index=selected_preset[4])
 
 # # User inputs for generating the Mandelbrot set
 # center_x = st.sidebar.number_input("Center X", value=-0.5, format="%.5f")
