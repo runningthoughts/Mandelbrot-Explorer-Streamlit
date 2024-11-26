@@ -59,7 +59,7 @@ def mandelbrot_set(xmin, xmax, ymin, ymax, img_width, img_height, max_iter):
 #################################################################
 st.set_page_config(page_title="Mandelbrot Explorer", layout="centered")
 st.title("Mandelbrot Set Explorer")
-st.write("Explore the Mandelbrot Set by adjusting the parameters below.")
+st.write("Explore the Mandelbrot Set by adjusting the parameters on the left. Preset images below correspond to the Preset buttons on the left. If you select a Preset, you will need to follow that by clicking the Generate button.")
 
 # Initialize session state for preset index if not already set
 if 'preset_idx' not in st.session_state:
