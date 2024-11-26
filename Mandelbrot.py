@@ -15,10 +15,10 @@ matplotlib.use('Agg')  # Use non-GUI backend for matplotlibz
 
 # Allows Ctrl-C to work in PC environment
 # def signal_handler(signal, frame):
-#    print('You pressed Ctrl+C!')
-#    sys.exit(0)
+#     print('You pressed Ctrl+C!')
+#     sys.exit(0)
 
-#signal.signal(signal.SIGINT, signal_handler)
+# signal.signal(signal.SIGINT, signal_handler)
 
 #################################################################
 # Calculate the Mandelbrot set
@@ -64,6 +64,8 @@ center_y = st.sidebar.number_input("Center Y", value=0.0, format="%.5f")
 zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=1.0, step=0.1, format="%.2f")
 max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=200)
 color_map = st.sidebar.selectbox("Color Map", ["viridis", "plasma", "inferno", "magma", "cividis", "jet"])
+
+st.image("static/p1.png")
 
 # Button to generate Mandelbrot set
 if st.sidebar.button("Generate Mandelbrot Set"):
