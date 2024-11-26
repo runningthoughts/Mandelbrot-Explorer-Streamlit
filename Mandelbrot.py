@@ -66,7 +66,7 @@ max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, val
 color_map = st.sidebar.selectbox("Color Map", ["viridis", "plasma", "inferno", "magma", "cividis", "jet"])
 
 cols = st.columns(6, gap="small")
-cols[0].image(["static/p1.png","static/p2.png"], width=150)
+cols[0].image("static/p1.png")
 cols[1].image("static/p2.png")
 cols[2].image("static/p3.png")
 cols[3].image("static/p4.png")
@@ -75,6 +75,11 @@ cols[5].image("static/p6.png")
 
 cols = st.columns(6)
 cols[0].button("Preset 1")
+cols[1].button("Preset 2")
+cols[2].button("Preset 3")
+cols[3].button("Preset 4")
+cols[4].button("Preset 5")
+cols[5].button("Preset 6")
 
 # Button to generate Mandelbrot set
 if st.sidebar.button("Generate Mandelbrot Set"):
