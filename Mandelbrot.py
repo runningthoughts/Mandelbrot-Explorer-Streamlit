@@ -65,7 +65,13 @@ zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=1.0, step=0.1,
 max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=200)
 color_map = st.sidebar.selectbox("Color Map", ["viridis", "plasma", "inferno", "magma", "cividis", "jet"])
 
-st.image("static/p1.png","static/p2.png","static/p3.png","static/p4.png","static/p5.png","static/p6.png")
+cols = st.beta_columns(6)
+cols[0].image("static/p1.png")
+cols[1].image("static/p2.png")
+cols[2].image("static/p3.png")
+cols[3].image("static/p4.png")
+cols[4].image("static/p5.png")
+cols[5].image("static/p.png")
 
 # Button to generate Mandelbrot set
 if st.sidebar.button("Generate Mandelbrot Set"):
