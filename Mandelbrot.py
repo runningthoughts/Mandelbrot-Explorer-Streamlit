@@ -14,11 +14,11 @@ import matplotlib
 matplotlib.use('Agg')  # Use non-GUI backend for matplotlibz
 
 # Allows Ctrl-C to work in PC environment
-def signal_handler(signal, frame):
-    print('You pressed Ctrl+C!')
-    sys.exit(0)
+# def signal_handler(signal, frame):
+#    print('You pressed Ctrl+C!')
+#    sys.exit(0)
 
-signal.signal(signal.SIGINT, signal_handler)
+#signal.signal(signal.SIGINT, signal_handler)
 
 #################################################################
 # Calculate the Mandelbrot set
