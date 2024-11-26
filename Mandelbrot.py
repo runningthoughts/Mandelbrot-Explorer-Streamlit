@@ -17,7 +17,9 @@ matplotlib.use('Agg')  # Use non-GUI backend for matplotlibz
 # Here are all the Presets from the older JavaScript code.
 # Streamlit is stateless, so have to preserve the Preload value
 # in a purposeful state and then simply load those values each
-# time the page loads.
+# time the page loads.  Location 0 is the main default values,
+# while locations 1-6 correspond directly to the thumbnail 
+# Presets 1-6.
 #################################################################
 PRESETS = [
     [-0.5, 0.0, 1.0, 200, 0],
@@ -71,7 +73,7 @@ if 'preset_idx' not in st.session_state:
 # viridis colormap initially (user can change this in the webpage
 #################################################################
 
-# User inputs for generating the Mandelbrot set
+# User Preset inputs for generating the Mandelbrot set
 preset_buttons = [st.sidebar.button(f"Preset {i+1}") for i in range(6)]
 for i, button in enumerate(preset_buttons):
     if button:
@@ -79,19 +81,18 @@ for i, button in enumerate(preset_buttons):
 
 selected_preset = PRESETS[st.session_state.preset_idx]
 
+# Values are loaded- either from Position 0, actual default values, or
+# from one of the 6 Presets, definied in the buttons above.
 center_x = st.sidebar.number_input("Center X", value=selected_preset[0], format="%.5f")
 center_y = st.sidebar.number_input("Center Y", value=selected_preset[1], format="%.5f")
 zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=selected_preset[2], step=0.1, format="%.2f")
 max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=selected_preset[3])
 color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"], index=selected_preset[4])
 
-# # User inputs for generating the Mandelbrot set
-# center_x = st.sidebar.number_input("Center X", value=-0.5, format="%.5f")
-# center_y = st.sidebar.number_input("Center Y", value=0.0, format="%.5f")
-# zoom = st.sidebar.number_input("Zoom Level", min_value=0.1, value=1.0, step=0.1, format="%.2f")
-# max_iter = st.sidebar.slider("Max Iterations", min_value=50, max_value=1000, value=200)
-# color_map = st.sidebar.selectbox("Color Map", ["viridis", "inferno", "seismic", "BrBG", "twilight", "nipy_spectral"])
-
+#################################################################
+# Add the 6 Preset thumbnails along the top. Note that the
+# corresponding buttons are laid out on the Sidebar on the left.
+#################################################################
 cols = st.columns(6, gap="small")
 cols[0].image("static/p1.png", caption="Preset 1")
 cols[1].image("static/p2.png", caption="Preset 2")
@@ -100,18 +101,7 @@ cols[3].image("static/p4.png", caption="Preset 4")
 cols[4].image("static/p5.png", caption="Preset 5")
 cols[5].image("static/p6.png", caption="Preset 6")
 
-# bcols = st.columns(6)
-# if bcols[0].button("Preset 1"):
-#     center_x.value=-0.5
-#     center_y.value=-0.605
-#     zoom.value=150
-#     color_map.value="viridis"
 
-# bcols[1].button("Preset 2")
-# bcols[2].button("Preset 3")
-# bcols[3].button("Preset 4")
-# bcols[4].button("Preset 5")
-# bcols[5].button("Preset 6")
 
 # Button to generate Mandelbrot set
 if st.sidebar.button("Generate Mandelbrot Set"):
